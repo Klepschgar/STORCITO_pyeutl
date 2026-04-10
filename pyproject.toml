@@ -1,28 +1,33 @@
-[tool.poetry]
+[project]
 name = "pyeutl"
 version = "0.1.0"
 description = "Access data on the European Union Emission Trading systsen (EU ETS) based on the data provided by euets.info."
-authors = ["Jan Abrell <abrell@posteo.de>"]
 readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Jan Abrell", email = "abrell@posteo.de" }]
+dependencies = [
+    "pandas>=2.0",
+    "matplotlib>=3.9.0",
+    "sqlalchemy>=2.0",
+    "psycopg2-binary>=2.9",
+    "openpyxl",
+    "jupyter",
+    "notebook",
+    "ipykernel",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.11"
-pandas = ">=2.0"
-matplotlib = "^3.9.0"
-sqlalchemy = ">=2.0"
-psycopg2-binary = ">=2.9"
-openpyxl = "*"
-jupyter = "*"
-notebook = "*"
-ipykernel = "*"
-
-[tool.poetry.group.dev.dependencies]
-ipykernel = "^6.29.4"
-black = "^24.4.2"
-nbsphinx = "^0.9.4"
-sphinx-rtd-theme = "^2.0.0"
-sphinx-math-dollar = "^1.2.1"
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.4",
+    "black>=24.4.2",
+    "nbsphinx>=0.9.4",
+    "sphinx-rtd-theme>=2.0.0",
+    "sphinx-math-dollar>=1.2.1",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["pyeutl*"]
