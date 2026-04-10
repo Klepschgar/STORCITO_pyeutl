@@ -7,6 +7,7 @@ requires-python = ">=3.11"
 authors = [{ name = "Jan Abrell", email = "abrell@posteo.de" }]
 dependencies = [
     "pandas>=2.0",
+    "polars>=1.0",
     "matplotlib>=3.9.0",
     "sqlalchemy>=2.0",
     "psycopg2-binary>=2.9",
