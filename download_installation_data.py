@@ -1,5 +1,8 @@
 import argparse
 from pathlib import Path
+from zipfile import ZipFile
+
+import pandas as pd
 
 
 def export_installation_site_data(
@@ -37,6 +40,21 @@ def export_installation_site_data(
     df_accounts.to_csv(output_dir / "installation_accounts.csv", index=False)
     df_account_holders.to_csv(output_dir / "account_holders.csv", index=False)
     df_transactions.to_csv(output_dir / "installation_transactions.csv", index=False)
+
+    raw_table_map = {
+        "installation.csv": "installation.parquet",
+        "compliance.csv": "compliance.parquet",
+        "account.csv": "account.parquet",
+        "account_holder.csv": "account_holder.parquet",
+        "activity_type.csv": "activity_type.parquet",
+        "nace_code.csv": "nace_code.parquet",
+        "country_code.csv": "country_code.parquet",
+        "compliance_code.csv": "compliance_code.parquet",
+    }
+    with ZipFile(zip_file) as fzip:
+        for source_name, target_name in raw_table_map.items():
+            with fzip.open(source_name) as src:
+                pd.read_csv(src, low_memory=False).to_parquet(output_dir / target_name, index=False)
 
     if downloaded_zip and not keep_zip:
         zip_file.unlink(missing_ok=True)

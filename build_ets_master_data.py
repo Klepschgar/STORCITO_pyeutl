@@ -7,7 +7,7 @@ import polars as pl
 
 _logger = logging.getLogger(__name__)
 
-_ETS_DIR = Path(__file__).resolve().parent / "data" / "ETS_location_data"
+_ETS_DIR = Path(__file__).resolve().parent / "installation_data"
 _TARGET_COUNTRIES = ("DE", "NL", "NO")
 _TARGET_YEAR = 2023
 

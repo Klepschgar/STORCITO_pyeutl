@@ -54,15 +54,19 @@ You can also use an existing zip file:
 uv run python download_installation_data.py --zip-file /absolute/path/to/eutl.zip --output-dir installation_data
 ```
 
+This script also exports the raw parquet tables required by the master builder
+into the same `installation_data` directory.
+
 ### Build ETS location master parquet
-If you have parquet source files under `data/ETS_location_data`, build the consolidated
+After running the download script above, build the consolidated
 master file with:
 
 ```
 uv run python build_ets_master_data.py
 ```
 
-This writes `data/ETS_location_data/ets_master_data.parquet`.
+This reads from `installation_data/*.parquet` and writes
+`installation_data/ets_master_data.parquet`.
 
 # Versions
 To access the 2022 version of the data please you have to use [v2022 version](https://github.com/jabrell/pyeutl/releases/tag/v2022)
