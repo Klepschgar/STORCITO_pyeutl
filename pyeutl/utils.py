@@ -1,10 +1,12 @@
 import os
 import requests
 
-MOST_RECENT_YEAR = 2024
+MOST_RECENT_YEAR = 2026
+FALLBACK_YEAR = 2024
 
 URLS = {
-    MOST_RECENT_YEAR: "https://euets-info-public.s3.eu-central-1.amazonaws.com/eutl_2024_202410.zip",
+    MOST_RECENT_YEAR: None,
+    FALLBACK_YEAR: "https://euets-info-public.s3.eu-central-1.amazonaws.com/eutl_2024_202410.zip",
     20245: "https://euets-info-public.s3.eu-central-1.amazonaws.com/eutl_2024_202405.zip",
     2023: "https://euets-info-public.s3.eu-central-1.amazonaws.com/eutl_2023.zip",
     2022: "https://euets-info-public.s3.eu-central-1.amazonaws.com/eutl_2022.zip",
@@ -27,9 +29,21 @@ def download_data(
     Returns:
         str: Path to the downloaded file.
     """
+    if year not in URLS:
+        raise ValueError(
+            f"Unsupported year '{year}'. Available keys are: {sorted(URLS.keys())}"
+        )
+    source_year = year
+    url = URLS[year]
+    if url is None:
+        source_year = FALLBACK_YEAR
+        url = URLS[source_year]
+        print(
+            f"No configured EUTL source for {year}. "
+            f"Downloading fallback data for {source_year}."
+        )
     if fn_out is None:
-        fn_out = os.path.join(os.getcwd(), f"eutl_{year}.zip")
-    dir_out = os.path.abspath(os.path.join(os.path.abspath(__file__), "../data/"))
-    r = requests.get(URLS[year], allow_redirects=True)
+        fn_out = os.path.join(os.getcwd(), f"eutl_{source_year}.zip")
+    r = requests.get(url, allow_redirects=True)
     open(fn_out, "wb").write(r.content)
     return fn_out

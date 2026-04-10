@@ -34,3 +34,6 @@ Documentation is currently provided in a series of jupyter notebooks.
 
 # Versions
 To access the 2022 version of the data please you have to use [v2022 version](https://github.com/jabrell/pyeutl/releases/tag/v2022)
+
+The default downloader target is set to 2026. As long as no 2026 source URL is configured,
+`download_data()` automatically falls back to the configured 2024 source.
