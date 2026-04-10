@@ -40,6 +40,20 @@ Documentation is currently provided in a series of jupyter notebooks.
 ## Ziploader
 1. zip_1_load_data.ipynb shows how to load installation, account, and transaction data: [Using the ziploader](https://nbviewer.org/github/jabrell/pyeutl/blob/dev202405/zip_1_load_data.ipynb)
 
+### One-shot script for installation-site data
+Run the following to download and export installation-related CSVs (`installations`,
+`compliance`, `accounts`, `account_holders`, and `transactions`):
+
+```
+uv run python download_installation_data.py --output-dir installation_data
+```
+
+You can also use an existing zip file:
+
+```
+uv run python download_installation_data.py --zip-file /absolute/path/to/eutl.zip --output-dir installation_data
+```
+
 # Versions
 To access the 2022 version of the data please you have to use [v2022 version](https://github.com/jabrell/pyeutl/releases/tag/v2022)
 
