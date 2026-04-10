@@ -1,7 +1,7 @@
 [project]
 name = "pyeutl"
 version = "0.1.0"
-description = "Access data on the European Union Emission Trading systsen (EU ETS) based on the data provided by euets.info."
+description = "Access data on the European Union Emission Trading system (EU ETS) based on the data provided by euets.info."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{ name = "Jan Abrell", email = "abrell@posteo.de" }]

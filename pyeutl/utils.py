@@ -4,6 +4,7 @@ import requests
 
 MOST_RECENT_YEAR = 2026
 FALLBACK_YEAR = 2024
+# Backward compatibility for historical typo-style year input.
 YEAR_ALIASES = {20245: 202405}
 logger = logging.getLogger(__name__)
 
