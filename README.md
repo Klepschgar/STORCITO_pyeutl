@@ -12,11 +12,19 @@ This package is currently under development and backward compatibility is theref
 
 # Installation 
 
-Dependencies are managed using poetry. So the most easy way to install *pyeutl* is to use
-pip in your python environment. The minimum python version has to be 3.11.
+Dependencies are managed using [uv](https://docs.astral.sh/uv/). The minimum python version
+is 3.11.
+
+For development, clone the repository and install dependencies with:
 
 ```
-pip install git+https://github.com/jabrell/pyeutl.git
+uv sync --group dev
+```
+
+To install directly from GitHub:
+
+```
+uv pip install git+https://github.com/jabrell/pyeutl.git
 ```
 
 # Get started
@@ -32,5 +40,37 @@ Documentation is currently provided in a series of jupyter notebooks.
 ## Ziploader
 1. zip_1_load_data.ipynb shows how to load installation, account, and transaction data: [Using the ziploader](https://nbviewer.org/github/jabrell/pyeutl/blob/dev202405/zip_1_load_data.ipynb)
 
+### One-shot script for installation-site data
+Run the following to download and export installation-related CSVs (`installations`,
+`compliance`, `accounts`, `account_holders`, and `transactions`):
+
+```
+uv run python download_installation_data.py --output-dir installation_data
+```
+
+You can also use an existing zip file:
+
+```
+uv run python download_installation_data.py --zip-file /absolute/path/to/eutl.zip --output-dir installation_data
+```
+
+This script also exports the raw parquet tables required by the master builder
+into the same `installation_data` directory.
+
+### Build ETS location master parquet
+After running the download script above, build the consolidated
+master file with:
+
+```
+uv run python build_ets_master_data.py
+```
+
+This reads from `installation_data/*.parquet` and writes
+`installation_data/ets_master_data.parquet`.
+
 # Versions
 To access the 2022 version of the data please you have to use [v2022 version](https://github.com/jabrell/pyeutl/releases/tag/v2022)
+
+The default downloader target is set to 2026. This is a temporary forward-compatible
+default for this fork while the 2026 EUTL zip URL is not yet configured. Until that URL
+is available, `download_data()` automatically falls back to the configured 2024 source.
