@@ -4,7 +4,7 @@ import requests
 
 MOST_RECENT_YEAR = 2026
 FALLBACK_YEAR = 2024
-LEGACY_YEAR_ALIASES = {20245: 202405}
+YEAR_ALIASES = {20245: 202405}
 logger = logging.getLogger(__name__)
 
 URLS = {
@@ -32,7 +32,7 @@ def download_data(
     Returns:
         str: Path to the downloaded file.
     """
-    resolved_year = LEGACY_YEAR_ALIASES.get(year, year)
+    resolved_year = YEAR_ALIASES.get(year, year)
     if resolved_year not in URLS:
         raise ValueError(
             f"Unsupported year '{year}'. Available keys are: {sorted(URLS.keys())}"
